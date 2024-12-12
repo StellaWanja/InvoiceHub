@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { CirclePlus } from "lucide-react";
+import { auth } from "@clerk/nextjs/server";
+import { eq } from "drizzle-orm";
 
 import { db } from "@/db";
-import { Invoices } from "@/db/schema";
+import { Invoices, Customers } from "@/db/schema";
 
 import {
   Table,
@@ -19,7 +21,20 @@ import { cn } from "@/lib/utils";
 import Container from "@/components/Container";
 
 export default async function Dashboard() {
-  const dbResults = await db.select().from(Invoices);
+  const { userId } = await auth();
+
+  if (!userId) return;
+
+  const dbResults = await db
+    .select()
+    .from(Invoices)
+    .innerJoin(Customers, eq(Invoices.customerId, Customers.id))
+    .where(eq(Invoices.userId, userId));
+
+  const invoices = dbResults?.map(({ invoices, customers }) => ({
+    ...invoices,
+    customer: customers,
+  }));
 
   return (
     <main className="h-full">
@@ -47,8 +62,8 @@ export default async function Dashboard() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {dbResults.map(
-              ({ id, createTimestamp, value, description, status }) => (
+            {invoices.map(
+              ({ id, createTimestamp, value, status, customer }) => (
                 <TableRow key={id}>
                   <TableCell className="font-medium text-left p-0">
                     <Link
@@ -63,12 +78,12 @@ export default async function Dashboard() {
                       href={`/invoices/${id}`}
                       className="block font-semibold p-4"
                     >
-                      Luke J. Fry
+                      {customer.name}
                     </Link>
                   </TableCell>
                   <TableCell className="text-left p-0">
                     <Link className="block p-4" href={`/invoices/${id}`}>
-                      fry@express.co
+                      {customer.email}
                     </Link>
                   </TableCell>
                   <TableCell className="text-center p-0">

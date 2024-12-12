@@ -8,6 +8,20 @@
       "when": 1733318257154,
       "tag": "0000_opposite_calypso",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1733843683757,
+      "tag": "0001_cuddly_patriot",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1734019859621,
+      "tag": "0002_romantic_skullbuster",
+      "breakpoints": true
     }
   ]
 }
