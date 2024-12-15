@@ -23,7 +23,7 @@ export default async function InvoicePage({
   params: { invoiceId: string };
 }) {
   const { userId } = await auth();
-  const invoiceId = await parseInt(params.invoiceId);
+  const invoiceId = parseInt(params.invoiceId);
 
   if (!userId) return;
 
