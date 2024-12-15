@@ -1,3 +1,7 @@
+export const WEB_TITLE="InvoiceHub";
+
+
+
 export const STATUS_OPTIONS = [
   {
     id: "open",

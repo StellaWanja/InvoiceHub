@@ -19,6 +19,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Container from "@/components/Container";
+import { WEB_TITLE } from "@/constants/invoices";
+
+export const generateMetadata = async () => {
+  return {
+    title: `${WEB_TITLE} • Dashboard`,
+  };
+};
 
 export default async function Dashboard() {
   const { userId } = await auth();

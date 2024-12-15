@@ -5,6 +5,17 @@ import { auth } from "@clerk/nextjs/server";
 import { db } from "@/db";
 import { Invoices, Customers } from "@/db/schema";
 import InvoiceData from "./Invoice";
+import { WEB_TITLE } from "@/constants/invoices";
+
+export const generateMetadata = async ({
+  params,
+}: {
+  params: { invoiceId: string };
+}) => {
+  return {
+    title: `${WEB_TITLE} #${params.invoiceId}`,
+  };
+};
 
 export default async function InvoicePage({
   params,
@@ -27,8 +38,6 @@ export default async function InvoicePage({
     .innerJoin(Customers, eq(Invoices.customerId, Customers.id))
     .where(and(eq(Invoices.id, invoiceId), eq(Invoices.userId, userId)))
     .limit(1);
-
-  console.log(result);
 
   // result not found
   if (!result) return notFound();
