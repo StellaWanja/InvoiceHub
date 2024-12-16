@@ -7,23 +7,19 @@ import { Invoices, Customers } from "@/db/schema";
 import InvoiceData from "./Invoice";
 import { WEB_TITLE } from "@/constants/invoices";
 
-export const generateMetadata = async ({
-  params,
-}: {
-  params: { invoiceId: string };
-}) => {
+type tParams = Promise<{ invoiceId: string }>;
+
+export const generateMetadata = async (props: { params: tParams }) => {
   return {
-    title: `${WEB_TITLE} #${params.invoiceId}`,
+    title: `${WEB_TITLE} #${(await props.params).invoiceId}`,
   };
 };
 
-export default async function InvoicePage({
-  params,
-}: {
-  params: { invoiceId: string };
-}) {
+export default async function InvoicePage(props: { params: tParams }) {
   const { userId } = await auth();
-  const invoiceId = parseInt(params.invoiceId);
+
+  const params = await props.params;
+  const invoiceId = Number.parseInt(params.invoiceId);
 
   if (!userId) return;
 

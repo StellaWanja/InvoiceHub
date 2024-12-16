@@ -21,7 +21,7 @@
     "clsx": "^2.1.1",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.37.0",
-    "framer-motion": "^11.13.1",
+    "framer-motion": "^11.14.4",
     "lucide-react": "^0.464.0",
     "next": "^15.0.0-rc.1",
     "pg": "^8.13.1",
