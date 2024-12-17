@@ -40,7 +40,7 @@ function Form({ ...props }: FormProps) {
 
   return (
     <>
-    {/* filling sign up form */}
+      {/* filling sign up form */}
       {!pendingVerification ? (
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
@@ -84,9 +84,6 @@ function Form({ ...props }: FormProps) {
               </button>
             </div>
           </div>
-
-          {/* CAPTCHA Widget */}
-          <div id="clerk-captcha"></div>
 
           {errors && (
             <Alert variant="destructive">
