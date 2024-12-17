@@ -1,17 +1,32 @@
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
-import React from "react";
-import Container from "@/components/Container";
 import Link from "next/link";
+import Image from "next/image";
+import {
+  OrganizationSwitcher,
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/nextjs";
+import React from "react";
+
+import Container from "@/components/Container";
+import Logo from "../../public/logo.svg";
 
 const Header = () => {
   return (
     <header className="mt-8 mb-12">
       <Container>
         <div className="flex justify-between items-center gap-4">
-          <p className="font-bold">
-            <Link href="/dashboard">InvoiceHub</Link>
-          </p>
-          <div>
+          <div className="flex items-center gap-4 font-bold">
+            <Link href="/dashboard" className="flex items-center gap-2">
+              <Image src={Logo} alt="InvoiceHub logo" width={30} height={30} />
+              <p>InvoiceHub</p>
+            </Link>
+            <SignedIn>
+              <OrganizationSwitcher />
+            </SignedIn>
+          </div>
+          <div className="font-bold hover:text-gray-600">
             <SignedOut>
               <SignInButton />
             </SignedOut>

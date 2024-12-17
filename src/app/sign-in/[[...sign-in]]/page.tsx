@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 
 export default function SignInPage() {
   return (
-    <div className="grid w-full flex-grow items-center bg-white px-4 sm:justify-center">
+    <div className="grid w-full flex-grow items-center bg-[#f5f4ff] px-4 sm:justify-center">
       <SignIn.Root>
         <SignIn.Step
           name="start"
@@ -41,13 +41,14 @@ export default function SignInPage() {
               type="email"
               required
               placeholder="Email"
-              className="w-full border-b border-neutral-200 bg-white pb-2 text-sm/6 text-neutral-950 outline-none placeholder:text-neutral-400 hover:border-neutral-300 focus:border-neutral-600 data-[invalid]:border-red-600 data-[invalid]:text-red-600"
+              className="w-full border-2 rounded-md border-neutral-300 bg-white px-2  py-2 text-sm/6 text-neutral-950 outline-none placeholder:text-neutral-400 hover:border-neutral-300 focus:border-neutral-600 data-[invalid]:border-red-600 data-[invalid]:text-red-600"
             />
             <Clerk.FieldError className="mt-2 block text-xs text-red-600" />
           </Clerk.Field>
           <SignIn.Action submit asChild>
             <Button className="w-full font-bold">Sign In</Button>
           </SignIn.Action>
+
           <div className="rounded-xl bg-neutral-100 p-5">
             <p className="mb-4 text-center text-sm/5 text-neutral-500">
               Alternatively, sign in with these platforms
@@ -84,7 +85,7 @@ export default function SignInPage() {
           </div>
           <p className="text-center text-sm text-neutral-500">
             Don&apos;t have an account?{" "}
-            <Link href={String(process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL)}>
+            <Link href={String(process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL)} className="hover:underline">
               Sign up
             </Link>
           </p>
@@ -130,45 +131,6 @@ export default function SignInPage() {
               className="relative w-full rounded-md bg-neutral-600 bg-gradient-to-b from-neutral-500 to-neutral-600 py-1.5 text-sm text-white shadow-[0_1px_1px_0_theme(colors.white/10%)_inset,0_1px_2.5px_0_theme(colors.black/36%)] outline-none ring-1 ring-inset ring-neutral-600 before:absolute before:inset-0 before:rounded-md before:bg-white/10 before:opacity-0 hover:before:opacity-100 focus-visible:outline-offset-2 focus-visible:outline-neutral-600 active:bg-neutral-600 active:text-white/60 active:before:opacity-0"
             >
               Continue
-            </SignIn.Action>
-          </SignIn.Strategy>
-
-          <SignIn.Strategy name="phone_code">
-            <header className="text-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                className="mx-auto size-10"
-                viewBox="0 0 24 24"
-              >
-                <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1ZM14 8H8M16 12H8M13 16H8"></path>
-              </svg>
-              <h1 className="mt-4 text-xl font-medium tracking-tight text-neutral-950">
-                Verify phone code
-              </h1>
-            </header>
-            <Clerk.GlobalError className="block text-sm text-red-600" />
-            <Clerk.Field name="code">
-              <Clerk.Label className="sr-only">Phone code</Clerk.Label>
-              <Clerk.Input
-                type="otp"
-                required
-                placeholder="Phone code"
-                className="w-full border-b border-neutral-200 bg-white pb-2 text-sm/6 text-neutral-950 outline-none placeholder:text-neutral-400 hover:border-neutral-300 focus:border-neutral-600 data-[invalid]:border-red-600 data-[invalid]:text-red-600"
-              />
-              <Clerk.FieldError className="mt-2 block text-xs text-red-600" />
-            </Clerk.Field>
-            <SignIn.Action
-              submit
-              className="relative w-full rounded-md bg-neutral-600 bg-gradient-to-b from-neutral-500 to-neutral-600 py-1.5 text-sm text-white shadow-[0_1px_1px_0_theme(colors.white/10%)_inset,0_1px_2.5px_0_theme(colors.black/36%)] outline-none ring-1 ring-inset ring-neutral-600 before:absolute before:inset-0 before:rounded-md before:bg-white/10 before:opacity-0 hover:before:opacity-100 focus-visible:outline-offset-2 focus-visible:outline-neutral-600 active:bg-neutral-600 active:text-white/60 active:before:opacity-0"
-            >
-              Log In
             </SignIn.Action>
           </SignIn.Strategy>
 
