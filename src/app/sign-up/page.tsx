@@ -14,7 +14,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import Form from "./Form";
+import SignupForm from "./Form";
 
 function SignUpPage() {
   const { isLoaded, setActive, signUp } = useSignUp();
@@ -118,7 +118,7 @@ function SignUpPage() {
         </CardHeader>
 
         <CardContent>
-          <Form
+          <SignupForm
             pendingVerification={pendingVerification}
             handleSubmit={handleSubmit}
             emailAddress={emailAddress}

@@ -23,7 +23,7 @@ type FormProps = {
   setCode: (code: string) => void;
 };
 
-function Form({ ...props }: FormProps) {
+function SignupForm({ ...props }: FormProps) {
   const {
     pendingVerification,
     handleSubmit,
@@ -134,4 +134,4 @@ function Form({ ...props }: FormProps) {
   );
 }
 
-export default Form;
+export default SignupForm;

@@ -44,12 +44,16 @@ export default async function Dashboard() {
   }));
 
   return (
-    <main className="h-full">
+    <main className="h-full max-w-full overflow-hidden">
       <Container>
-        <div className="flex justify-between mb-6">
+        <div className="flex flex-col sm:flex-row justify-between mb-6">
           <h1 className="text-3xl font-semibold">Invoices</h1>
           <p>
-            <Button className="inline-flex gap-2" variant="ghost" asChild>
+            <Button
+              className="inline-flex gap-2 pl-0 mt-4 sm:mt-0"
+              variant="ghost"
+              asChild
+            >
               <Link href="/invoices/new-invoice">
                 <CirclePlus className="h-4 w-4" />
                 Create Invoice

@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { createAction } from "@/app/actions";
 import SubmitButton from "@/components/SubmitButton";
 import Container from "@/components/Container";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function NewInvoice() {
   const [formStatus, setFormStatus] = useState("ready");
@@ -23,48 +24,82 @@ export default function NewInvoice() {
   }
 
   return (
-    <main className="h-full">
-      <Container>
-        <div className="flex justify-between mb-6">
-          <h1 className="text-3xl font-semibold">Create Invoice</h1>
-        </div>
+    <main className="h-full flex justify-center items-center">
+      <Container className="w-full">
+        <Card className="w-full ">
+          <CardHeader>
+            <CardTitle className="flex justify-between mb-6">
+              <h1 className="text-3xl font-semibold">Create Invoice</h1>
+            </CardTitle>
+          </CardHeader>
 
-        <Form
-          action={createAction}
-          onSubmit={handleSubmit}
-          className="grid gap-4 max-w-xs"
-        >
-          <div>
-            <Label htmlFor="name" className="font-semibold text-sm block mb-2">
-              Billing Name
-            </Label>
-            <Input type="text" id="name" name="name" />
-          </div>
-          <div>
-            <Label htmlFor="email" className="font-semibold text-sm block mb-2">
-              Billing Email
-            </Label>
-            <Input type="email" id="email" name="email" />
-          </div>
-          <div>
-            <Label htmlFor="value" className="font-semibold text-sm block mb-2">
-              Value
-            </Label>
-            <Input type="text" id="value" name="value" />
-          </div>
-          <div>
-            <Label
-              htmlFor="description"
-              className="font-semibold text-sm block mb-2"
+          <CardContent>
+            <Form
+              action={createAction}
+              onSubmit={handleSubmit}
+              className="grid gap-6 "
             >
-              Description
-            </Label>
-            <Textarea id="description" name="description"></Textarea>
-          </div>
-          <div>
-            <SubmitButton />
-          </div>
-        </Form>
+              <div className="w-full">
+                <Label
+                  htmlFor="name"
+                  className="font-semibold text-md block mb-2"
+                >
+                  Billing Name
+                </Label>
+                <Input
+                  type="text"
+                  id="name"
+                  name="name"
+                  className="border-2 border-gray-300 rounded-md w-full"
+                />
+              </div>
+              <div>
+                <Label
+                  htmlFor="email"
+                  className="font-semibold text-md block mb-2"
+                >
+                  Billing Email
+                </Label>
+                <Input
+                  type="email"
+                  id="email"
+                  name="email"
+                  className="border-2 border-gray-300 rounded-md "
+                />
+              </div>
+              <div>
+                <Label
+                  htmlFor="value"
+                  className="font-semibold text-md block mb-2"
+                >
+                  Value
+                </Label>
+                <Input
+                  type="text"
+                  id="value"
+                  name="value"
+                  className="border-2 border-gray-300 rounded-md "
+                />
+              </div>
+              <div>
+                <Label
+                  htmlFor="description"
+                  className="font-semibold text-md block mb-2"
+                >
+                  Description
+                </Label>
+                <Textarea
+                  id="description"
+                  name="description"
+                  className="border-2 border-gray-300 rounded-md "
+                ></Textarea>
+              </div>
+              <div>
+                <SubmitButton />
+              </div>
+            </Form>
+          </CardContent>
+        </Card>
       </Container>
     </main>
   );

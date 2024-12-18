@@ -1,12 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import {
-  OrganizationSwitcher,
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import React from "react";
 
 import Container from "@/components/Container";
@@ -22,9 +16,6 @@ const Header = () => {
               <Image src={Logo} alt="InvoiceHub logo" width={30} height={30} />
               <p>InvoiceHub</p>
             </Link>
-            <SignedIn>
-              <OrganizationSwitcher />
-            </SignedIn>
           </div>
           <div className="font-bold hover:text-gray-600">
             <SignedOut>
