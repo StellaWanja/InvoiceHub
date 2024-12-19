@@ -6,20 +6,11 @@ import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { Invoices, Customers } from "@/db/schema";
 
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import Container from "@/components/Container";
 import { WEB_TITLE } from "@/constants/invoices";
+import { DataTable } from "./data-table";
+import { columns, Invoice } from "./columns";
 
 export const generateMetadata = async () => {
   return {
@@ -38,9 +29,11 @@ export default async function Dashboard() {
     .innerJoin(Customers, eq(Invoices.customerId, Customers.id))
     .where(eq(Invoices.userId, userId));
 
-  const invoices = dbResults?.map(({ invoices, customers }) => ({
-    ...invoices,
-    customer: customers,
+  const invoices: Invoice[] = dbResults?.map(({ invoices, customers }) => ({
+    invoice: {
+      ...invoices,
+      customer: customers,
+    },
   }));
 
   return (
@@ -61,14 +54,22 @@ export default async function Dashboard() {
             </Button>
           </p>
         </div>
-        <Table>
+
+        <DataTable<Invoice> columns={columns} data={invoices} />
+        {/* <Table>
           <TableCaption>A list of your recent invoices.</TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px] p-4">Date</TableHead>
-              <TableHead className="p-4">Customer</TableHead>
+              <TableHead className="w-[100px] p-4 hidden md:table-cell">
+                Date
+              </TableHead>
+              <TableHead className="p-4 hidden sm:table-cell">
+                Customer
+              </TableHead>
               <TableHead className="p-4">Email</TableHead>
-              <TableHead className="text-center p-4">Status</TableHead>
+              <TableHead className="text-center p-4 hidden sm:table-cell">
+                Status
+              </TableHead>
               <TableHead className="text-right p-4">Value</TableHead>
             </TableRow>
           </TableHeader>
@@ -76,7 +77,7 @@ export default async function Dashboard() {
             {invoices.map(
               ({ id, createTimestamp, value, status, customer }) => (
                 <TableRow key={id}>
-                  <TableCell className="font-medium text-left p-0">
+                  <TableCell className="hidden md:table-cell font-medium text-left p-0">
                     <Link
                       href={`/invoices/${id}`}
                       className="block font-semibold p-4"
@@ -84,7 +85,7 @@ export default async function Dashboard() {
                       {new Date(createTimestamp).toLocaleDateString()}
                     </Link>
                   </TableCell>
-                  <TableCell className="text-left p-0">
+                  <TableCell className="text-left p-0 hidden sm:table-cell">
                     <Link
                       href={`/invoices/${id}`}
                       className="block font-semibold p-4"
@@ -97,7 +98,7 @@ export default async function Dashboard() {
                       {customer.email}
                     </Link>
                   </TableCell>
-                  <TableCell className="text-center p-0">
+                  <TableCell className="text-center p-0 hidden sm:table-cell">
                     <Link className="block p-4" href={`/invoices/${id}`}>
                       <Badge
                         className={cn(
@@ -124,7 +125,7 @@ export default async function Dashboard() {
               )
             )}
           </TableBody>
-        </Table>
+        </Table> */}
       </Container>
     </main>
   );

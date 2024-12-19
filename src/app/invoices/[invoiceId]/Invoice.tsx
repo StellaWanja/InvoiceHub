@@ -54,9 +54,9 @@ export default function InvoiceData({ invoice }: InvoiceDataProps) {
   }
 
   return (
-    <main className="h-full w-full">
+    <main className="h-full max-w-full">
       <Container>
-        <div className="flex justify-between mb-8">
+        <div className="flex flex-col sm:flex-row justify-between mb-8">
           <h1 className="flex items-center gap-4 text-3xl font-semibold">
             Invoice #{invoice.id}
             <Badge
@@ -72,7 +72,7 @@ export default function InvoiceData({ invoice }: InvoiceDataProps) {
             </Badge>
           </h1>
 
-          <div className="flex gap-4">
+          <div className="flex gap-4 mt-4 sm:mt-0">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -151,7 +151,9 @@ export default function InvoiceData({ invoice }: InvoiceDataProps) {
         </div>
 
         <p className="text-3xl mb-3">${(invoice.value / 100).toFixed(2)}</p>
-        <p className="text-lg mb-8"><strong>Description:</strong> {invoice.description}</p>
+        <p className="text-lg mb-8">
+          <strong>Description:</strong> {invoice.description}
+        </p>
 
         <h2 className="font-bold text-lg mb-4">Billing Details</h2>
 
