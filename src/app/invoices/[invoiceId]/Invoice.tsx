@@ -17,7 +17,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { ChevronDown, EllipsisVertical, Trash2 } from "lucide-react";
+import { ChevronDown, EllipsisVertical, Trash2, Download } from "lucide-react";
+import Link from "next/link";
 
 import { Customers, Invoices } from "@/db/schema";
 
@@ -111,6 +112,14 @@ export default function InvoiceData({ invoice }: InvoiceDataProps) {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
+                  <DropdownMenuItem>
+                    <Link href={`/invoices/${invoice.id}/pdf`}>
+                      <button className="flex items-center gap-2">
+                        <Download className="w-4 h-auto" />
+                        Download PDF
+                      </button>
+                    </Link>
+                  </DropdownMenuItem>
                   <DropdownMenuItem>
                     <DialogTrigger asChild>
                       <button className="flex items-center gap-2">
