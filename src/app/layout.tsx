@@ -1,10 +1,13 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
-import "./globals.css";
+
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { WEB_TITLE } from "@/constants/invoices";
+import Spinner from "@/components/Spinner";
+import "./globals.css";
 
 const inter = Inter({
   weight: ["400", "500", "700"],
@@ -30,7 +33,7 @@ export default function RootLayout({
           className={`${inter.className} antialiased min-h-screen grid grid-rows-[auto_1fr_auto] bg-[#f5f4ff]`}
         >
           <Header />
-          {children}
+          <Suspense fallback={<Spinner />}>{children}</Suspense>
           <Footer />
         </body>
       </html>

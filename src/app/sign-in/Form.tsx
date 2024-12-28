@@ -92,7 +92,7 @@ const SigninForm = ({ ...props }: FormProps) => {
           href="/sign-up"
           className="font-medium text-primary hover:underline"
         >
-          Sign in
+          Sign up
         </Link>
       </p>
     </>

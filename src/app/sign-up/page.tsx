@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSignUp } from "@clerk/nextjs";
 import { ClerkAPIError } from "@clerk/types";
 import { isClerkAPIResponseError } from "@clerk/nextjs/errors";
+import { Loader } from "lucide-react";
 
 import {
   Card,
@@ -14,6 +15,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import Spinner from "@/components/Spinner";
 import SignupForm from "./Form";
 
 function SignUpPage() {
@@ -24,11 +26,12 @@ function SignUpPage() {
   const [password, setPassword] = useState("");
   const [pendingVerification, setPendingVerification] = useState(false);
   const [code, setCode] = useState("");
-  const [errors, setErrors] = React.useState<ClerkAPIError[]>();
+  const [errors, setErrors] = useState<ClerkAPIError[]>();
   const [showPassword, setShowPassword] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   if (!isLoaded) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -36,9 +39,10 @@ function SignUpPage() {
 
     // Clear any errors that may have occurred during previous form submission
     setErrors(undefined);
+    setIsLoading(true);
 
     if (!isLoaded) {
-      return <div>Loading...</div>;
+      return <Spinner />;
     }
 
     try {
@@ -49,6 +53,7 @@ function SignUpPage() {
       if (isClerkAPIResponseError(err)) setErrors(err.errors);
       console.error(JSON.stringify(err, null, 2));
     }
+    setIsLoading(false);
   }
 
   async function handleVerificationSubmit(
@@ -56,8 +61,10 @@ function SignUpPage() {
   ) {
     event.preventDefault();
 
+    setIsLoading(true);
+
     if (!isLoaded) {
-      return <div>Loading...</div>;
+      return <Spinner />;
     }
 
     try {
@@ -66,7 +73,11 @@ function SignUpPage() {
       });
 
       if (completeSignUp.status !== "complete") {
-        return <div>Unable to signup</div>;
+        return (
+          <div className="w-full flex items-center justify-center font-bold">
+            Unable to signup
+          </div>
+        );
       }
 
       if (completeSignUp.status === "complete") {
@@ -77,9 +88,12 @@ function SignUpPage() {
       if (isClerkAPIResponseError(err)) setErrors(err.errors);
       console.error(JSON.stringify(err, null, 2));
     }
+    setIsLoading(false);
   }
 
   async function handleGoogleSignup() {
+    setIsLoading(true);
+
     try {
       await signUp?.authenticateWithRedirect({
         strategy: "oauth_google",
@@ -90,6 +104,8 @@ function SignUpPage() {
       if (isClerkAPIResponseError(err)) setErrors(err.errors);
       console.error(JSON.stringify(err, null, 2));
     }
+
+    setIsLoading(false);
   }
 
   return (
@@ -112,7 +128,7 @@ function SignUpPage() {
               <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1ZM14 8H8M16 12H8M13 16H8"></path>
             </svg>
             <h1 className="mt-4 text-xl font-medium tracking-tight text-neutral-950">
-              Sign up to InvoiceHub
+              Sign up to InvoiceHub 
             </h1>
           </CardTitle>
         </CardHeader>
@@ -131,6 +147,7 @@ function SignUpPage() {
             handleVerificationSubmit={handleVerificationSubmit}
             code={code}
             setCode={setCode}
+            isLoading={isLoading}
           />
         </CardContent>
 
@@ -164,7 +181,7 @@ function SignUpPage() {
                     </clipPath>
                   </defs>
                 </svg>
-                Sign up with Google
+                Sign up with Google {(isLoading) && <Loader className="animate-spin" />}
               </Button>
             </div>
           </div>

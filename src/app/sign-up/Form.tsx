@@ -2,6 +2,7 @@ import React from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { ClerkAPIError } from "@clerk/types";
 import Link from "next/link";
+import { Loader } from "lucide-react";
 
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -21,6 +22,7 @@ type FormProps = {
   handleVerificationSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   code: string;
   setCode: (code: string) => void;
+  isLoading: boolean;
 };
 
 function SignupForm({ ...props }: FormProps) {
@@ -37,6 +39,7 @@ function SignupForm({ ...props }: FormProps) {
     handleVerificationSubmit,
     code,
     setCode,
+    isLoading,
   } = props;
 
   return (
@@ -93,7 +96,7 @@ function SignupForm({ ...props }: FormProps) {
               </Alert>
             )}
             <Button type="submit" className="w-full">
-              Sign Up
+              Sign Up {(isLoading) && <Loader className="animate-spin" />}
             </Button>
           </form>
 
@@ -126,7 +129,7 @@ function SignupForm({ ...props }: FormProps) {
             </Alert>
           )}
           <Button type="submit" className="w-full">
-            Verify Email
+            Verify Email {isLoading && <Loader className="animate-spin" />}
           </Button>
         </form>
       )}

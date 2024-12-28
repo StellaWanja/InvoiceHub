@@ -14,6 +14,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import Spinner from "@/components/Spinner";
 import SigninForm from "./Form";
 
 function SignInPage() {
@@ -26,7 +27,7 @@ function SignInPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   if (!isLoaded) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
   async function handleSubmit(event: React.FormEvent) {
@@ -36,7 +37,7 @@ function SignInPage() {
     setErrors(undefined);
 
     if (!isLoaded) {
-      return <div>Loading...</div>;
+      return <Spinner />;
     }
 
     try {
