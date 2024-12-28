@@ -8,6 +8,8 @@ import {
   useReactTable,
   getPaginationRowModel,
   PaginationState,
+  ColumnFiltersState,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
 
 import {
@@ -19,6 +21,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 interface DataTableProps<TData> {
   columns: ColumnDef<TData, unknown>[];
@@ -30,19 +33,33 @@ export function DataTable<TData>({ columns, data }: DataTableProps<TData>) {
     pageIndex: 0,
     pageSize: 5, // Display 5 items per page
   });
-  
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    state: { pagination },
     onPaginationChange: setPagination,
     pageCount: Math.ceil(data.length / pagination.pageSize),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
+    state: { pagination, columnFilters },
   });
 
   return (
     <>
+      <div className="flex items-center py-4">
+        <Input
+          placeholder="Filter emails..."
+          value={(table.getColumn("customer.email")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("customer.email")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
+      </div>
+
       <Table>
         <TableHeader>
           <TableRow>

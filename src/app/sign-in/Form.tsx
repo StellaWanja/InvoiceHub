@@ -2,6 +2,7 @@ import React from "react";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { ClerkAPIError } from "@clerk/types";
+import { Loader } from "lucide-react";
 
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -17,6 +18,7 @@ type FormProps = {
   setPassword: (password: string) => void;
   setShowPassword: (showPassword: boolean) => void;
   errors: ClerkAPIError[] | undefined;
+  isLoading: boolean;
 };
 
 const SigninForm = ({ ...props }: FormProps) => {
@@ -29,6 +31,7 @@ const SigninForm = ({ ...props }: FormProps) => {
     setPassword,
     setShowPassword,
     errors,
+    isLoading,
   } = props;
 
   return (
@@ -82,7 +85,7 @@ const SigninForm = ({ ...props }: FormProps) => {
           </Alert>
         )}
         <Button type="submit" className="w-full">
-          Sign In
+          Sign In {isLoading && <Loader className="animate-spin" />}
         </Button>
       </form>
 

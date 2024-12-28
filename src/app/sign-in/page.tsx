@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { useSignIn } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { ClerkAPIError } from "@clerk/types";
 import { isClerkAPIResponseError } from "@clerk/clerk-react/errors";
+import { Loader } from "lucide-react";
 
 import {
   Card,
@@ -23,8 +24,9 @@ function SignInPage() {
 
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = React.useState<ClerkAPIError[]>();
+  const [errors, setErrors] = useState<ClerkAPIError[]>();
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   if (!isLoaded) {
     return <Spinner />;
@@ -35,6 +37,7 @@ function SignInPage() {
 
     // Clear any errors that may have occurred during previous form submission
     setErrors(undefined);
+    setIsLoading(true);
 
     if (!isLoaded) {
       return <Spinner />;
@@ -56,9 +59,12 @@ function SignInPage() {
       if (isClerkAPIResponseError(err)) setErrors(err.errors);
       console.error(JSON.stringify(err, null, 2));
     }
+
+    setIsLoading(false);
   }
 
   async function handleGoogleSignin() {
+    setIsLoading(true);
     try {
       await signIn?.authenticateWithRedirect({
         strategy: "oauth_google",
@@ -69,6 +75,7 @@ function SignInPage() {
       if (isClerkAPIResponseError(err)) setErrors(err.errors);
       console.error(JSON.stringify(err, null, 2));
     }
+    setIsLoading(false);
   }
 
   return (
@@ -106,6 +113,7 @@ function SignInPage() {
             setPassword={setPassword}
             setShowPassword={setShowPassword}
             errors={errors}
+            isLoading={isLoading}
           />
         </CardContent>
 
@@ -139,7 +147,8 @@ function SignInPage() {
                     </clipPath>
                   </defs>
                 </svg>
-                Log in with Google
+                Log in with Google{" "}
+                {isLoading && <Loader className="animate-spin" />}
               </Button>
             </div>
           </div>

@@ -39,12 +39,18 @@ export const columns: ColumnDef<Invoice>[] = [
   },
   {
     accessorKey: "customer.email",
+    accessorFn: (row) => row.invoice.customer.email,
+    id: "customer.email",
     header: "Email",
     cell: ({ row }) => (
       <Link href={`/invoices/${row.original.invoice.id}`} className="block p-2 text-left ">
         {row.original.invoice.customer.email}
       </Link>
     ),
+    filterFn: (row, columnId, filterValue) => {
+      const email = row.original.invoice.customer.email;
+      return email.toLowerCase().includes(filterValue.toLowerCase());
+    },
   },
   {
     accessorKey: "status",
