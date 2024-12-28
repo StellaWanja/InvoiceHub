@@ -1,6 +1,6 @@
 # InvoiceHub
 
-This is an intuitive invoice management platform where invoices can easily be created, payment statuses tracked in real-time, and PDFs generated of the invoices for seamless sharing or record-keeping. The platform is built using **React(v19)**, **TypeScript** and **NextJS(v15)** for dynamic and scalable development, **Clerk** for user authentication, **Tailwind CSS** and **shadcn/ui** for a polished and accessible design, **@react-pdf/renderer** for high-quality PDF generation for invoices, and **@tanstack/react-table** for handling advanced data management. For database operations, **Drizzle ORM** and **PostgreSQL** have been used.
+This is an intuitive invoice management platform where invoices can easily be created, payment statuses tracked in real-time, and PDFs generated of the invoices for seamless sharing or record-keeping. The platform is built using **React(v19)**, **TypeScript** and **NextJS(v15)** for dynamic and scalable development, **Clerk** for user authentication, **Tailwind CSS** and **shadcn/ui** for a polished and accessible design, **@react-pdf/renderer** for high-quality PDF generation, and **@tanstack/react-table** for handling advanced data management. For database operations, **Drizzle ORM** and **PostgreSQL** have been used.
 
 <image src="https://github.com/StellaWanja/InvoiceHub/blob/main/public/site.png" alt="Site" />
 
