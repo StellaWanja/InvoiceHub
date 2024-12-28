@@ -7,22 +7,13 @@ import { renderToStream } from "@react-pdf/renderer";
 
 import { db } from "@/db";
 import { Invoices, Customers } from "@/db/schema";
-import { WEB_TITLE } from "@/constants/invoices";
 import InvoiceDocument from "./InvoiceDocument";
 
 type tParams = Promise<{ invoiceId: string }>;
 
-export const generateMetadata = async (props: { params: tParams }) => {
-  return {
-    title: `${WEB_TITLE} #${(await props.params).invoiceId} PDF`,
-  };
-};
-
-export async function GET(
-  request: Request,
-  { params }: { params: { invoiceId: string } }
-) {
+export async function GET(request: Request, props: { params: tParams }) {
   const { userId } = await auth();
+  const params = await props.params;
   const invoiceId = Number.parseInt(params.invoiceId);
 
   if (!userId) return;
@@ -52,6 +43,7 @@ export async function GET(
   return new NextResponse(stream as unknown as ReadableStream, {
     headers: {
       "Content-Type": "application/pdf",
+      "Content-Disposition": `attachment; filename="Invoice No.${invoiceId} PDF.pdf"`,
     },
   });
 }
